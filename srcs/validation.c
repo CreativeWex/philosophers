@@ -9,7 +9,7 @@ void    ft_wrong_arg_num()
 	printf("\n3: Time to eat");
 	printf("\n4: Time to sleep");
 	printf("\n5: Number of eatings");
-    printf("\n-------------------");
+    printf("\n-------------------\n");
 }
 
 int    ft_is_num(char **argv)
@@ -22,21 +22,21 @@ int    ft_is_num(char **argv)
 		if (!ft_atoi(argv[i]))
 		{
 			printf("Invalid argument: %s\n", argv[i]);
-			return (-1);
+			return (0);
 		}
 		i++;
 	}
-    return (0);
+    return (1);
 }
 
 int ft_validation(int argc, char **argv)
 {
-    if (argc != 5 && argc != 6)
+    if (argc < 6 || argc > 7)
     {
         ft_wrong_arg_num();
-        return (-1);
+        return (0);
     }
-    if (!ft_is_num(argv))
-        return (-1);
-    return 0;
+    else if (!ft_is_num(argv))
+        return (0);
+    return (1);
 }

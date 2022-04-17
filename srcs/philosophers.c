@@ -4,10 +4,10 @@ int main(int argc, char **argv)
 {
     t_args options;
 
-    if(ft_validation(argc, argv) == -1)
+    if(ft_validation(argc, argv) == 0)
         return (0);
-
-    ft_structure_init(&options, argc, argv);  
-    // debug_display_struct(&options);
+    if(ft_structure_init(&options, argc, argv) == 0)
+        return (0);
+    debug_display_struct(&options);
     return (0);
 }
