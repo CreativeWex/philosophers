@@ -8,7 +8,8 @@ HEADER  =	includes/philosophers.h
 #		ALL FILES
 #//////////////////////////////////////////////////////////////////////////////
 
-SRCS	=	srcs/philosophers.c srcs/validation.c
+SRCS	=	srcs/philosophers.c srcs/validation.c srcs/initialisation.c \
+			srcs/testing.c
 
 OBJS	=	$(SRCS:%.c=%.o)
 
