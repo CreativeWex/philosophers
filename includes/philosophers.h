@@ -3,27 +3,27 @@
 # include "../libft/libft.h"
 # include <sys/time.h>
 
-typedef struct s_time
-{
-    long    tv_sec;
-    long    tv_usec;
-}           t_time;
+struct s_args;
 
 // философы
 typedef struct s_philos
 {
-    int       id;
+    int             id;
+    int             philo_number;
+
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
     int             nbr_eated;
     int             t_die;
     int             t_eat;
     int             t_sleep;
-    int             t_last_eated;
+    int             f_must_die; // stop
+    time_t          t_last_eated;
+    struct s_args   *args;
     
     // struct t_time   eating_time;          
 
-}       t_philos;
+}                   t_philos;
 
 // параметры
 typedef struct s_args
@@ -33,11 +33,12 @@ typedef struct s_args
     int             t_eat;
     int             t_sleep;
     int             nbr_of_eating;
-    int             must_die;
     pthread_mutex_t	lock_print;
+    pthread_t       *thread_ids;
     pthread_mutex_t	*forks; // 
+    int             f_is_dead;
 
-    t_philos        philo_arr;
+    t_philos        *philo_arr;
 
 }                   t_args;
 
@@ -52,6 +53,7 @@ void    ft_init_threads(t_args *options);
 
 // processing.c 
 void    *ft_philo_lifecycle(void* options);
+void    *ft_should_philo_die(void *options);
 
 // utils.c
 long	ft_current_time(void);

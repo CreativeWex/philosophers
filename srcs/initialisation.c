@@ -30,14 +30,16 @@ void ft_init_philos(t_args *options)
     i = -1;
     while (++i < options->philo_number)
     {
-        philos->id = i;
-        philos->nbr_eated = 0;
-        philos->t_eat = options->t_eat;
-        philos->t_sleep = options->t_sleep;
-        philos->t_die = options->t_die;
-        philos->t_last_eated = ft_current_time();
-
+        philos[i].id = i;
+        philos[i].nbr_eated = 0;
+        philos[i].t_eat = options->t_eat;
+        philos[i].t_sleep = options->t_sleep;
+        philos[i].t_die = options->t_die;
+        philos[i].t_last_eated = ft_current_time();
+        philos[i].args = options;
+        philos[i].philo_number = options->philo_number;
     }
+    options->philo_arr = philos;
 }
 
 void    ft_init_mutex(t_args *options)
@@ -56,6 +58,7 @@ void    ft_init_mutex(t_args *options)
 void    ft_init_threads(t_args *options)
 {
     pthread_t *threads;
+    pthread_t data;
     int       i;
 
     threads = malloc(options->philo_number * sizeof(pthread_t));
@@ -63,6 +66,8 @@ void    ft_init_threads(t_args *options)
     while(++i < options->philo_number)
     {
         pthread_create(&threads[i], NULL, ft_philo_lifecycle, (void *)&options->philo_arr);
-        
     }
+    pthread_create(&data, NULL, ft_should_philo_die, (void *)&options->philo_arr);
+    pthread_join(data, NULL);
+    options->thread_ids = threads;
 }
