@@ -1,9 +1,6 @@
 #include "../includes/philosophers.h"
 
-void ft_philo(int philo_id)
-{
-    printf("Я родился");
-}
+
 
 int main(int argc, char **argv)
 {

@@ -2,8 +2,6 @@
 
 void  *ft_should_philo_die(void *options)
 {
-    // Пока не должен умереть в цикле проходимся по всем философам
-    // Сравниваем разницу по времени с лимитом жизни, если что - убиваем
     t_philos     *philo;
     int         i;
     
@@ -21,11 +19,9 @@ void  *ft_should_philo_die(void *options)
                 return (NULL);
             }
         }
+            // проверка на количество приемов пищи
+
     }
-
-
-
-    // проверка на количество приемов пищи
     return (NULL);
 }
 
@@ -40,7 +36,6 @@ void    *ft_philo_lifecycle(void* options)
         // Условие для выхода из цикла
         // Взять вилки
         // Проверка
-        // Проверка
         // Питание
         // Проверка
         // Сон
@@ -48,7 +43,6 @@ void    *ft_philo_lifecycle(void* options)
         // Размышления
         // Проверка
         printf("Цикл пройден");
-
     }
     return (NULL);
 }
