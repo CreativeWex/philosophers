@@ -6,5 +6,5 @@ void debug_display_struct(t_args *options)
     printf("\nt_die = %d", options->t_die);
     printf("\nt_eat = %d", options->t_eat);
     printf("\nt_sleep = %d", options->t_sleep);
-    printf("\nnum_eat = %d", options->num_eat);
+    printf("\nnum_eat = %d", options->nbr_of_eating);
 }
