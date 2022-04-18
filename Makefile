@@ -9,7 +9,7 @@ HEADER  =	includes/philosophers.h
 #//////////////////////////////////////////////////////////////////////////////
 
 SRCS	=	srcs/philosophers.c srcs/validation.c srcs/initialisation.c \
-			srcs/testing.c
+			srcs/testing.c		srcs/processing.c srcs/utils.c
 
 OBJS	=	$(SRCS:%.c=%.o)
 
@@ -32,7 +32,7 @@ END		=	\033[0m
 all		:	$(NAME)
 
 $(NAME)	:	$(OBJS) $(HEADER) ${SRCS} ${HEAD} ${LIBFT}
-	@echo "$(BLUE)Compilation of $(NAME)$(END)"
+	@echo "\n$(BLUE)Compilation of $(NAME)$(END)"
 	@$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $(NAME)
 	@echo "$(TURQUOISE)\n[ Completed $(NAME) ]\n$(END)"
 

@@ -35,7 +35,7 @@ void ft_init_philos(t_args *options)
         philos->t_eat = options->t_eat;
         philos->t_sleep = options->t_sleep;
         philos->t_die = options->t_die;
-        // время последнего обеда
+        philos->t_last_eated = ft_current_time();
 
     }
 }
@@ -51,5 +51,18 @@ void    ft_init_mutex(t_args *options)
         pthread_mutex_init(&mutex[i], NULL);
     pthread_mutex_init(&options->lock_print, NULL);
     options->forks = mutex;
+}
 
+void    ft_init_threads(t_args *options)
+{
+    pthread_t *threads;
+    int       i;
+
+    threads = malloc(options->philo_number * sizeof(pthread_t));
+    i = -1;
+    while(++i < options->philo_number)
+    {
+        pthread_create(&threads[i], NULL, ft_philo_lifecycle, (void *)&options->philo_arr);
+        
+    }
 }
