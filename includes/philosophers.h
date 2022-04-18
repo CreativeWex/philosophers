@@ -19,6 +19,7 @@ typedef struct s_args
     int             nbr_of_eating;
     int             must_die;
     pthread_mutex_t	lock_print;
+    pthread_mutex_t	*forks; // 
 
 
 
@@ -39,10 +40,12 @@ typedef struct s_philos
 
 }       t_philos;
 
-int ft_validation(int argc, char **argv);
-int ft_structure_init(t_args *options, int argc, char **argv);
-void ft_init_philos(t_args *options);
+int     ft_validation(int argc, char **argv);
+int     ft_structure_init(t_args *options, int argc, char **argv);
+void    ft_init_philos(t_args *options);
+void    ft_init_mutex(t_args *options);
+
 
 //testing is 300 bucks
-void debug_display_struct(t_args *options);
+void    debug_display_struct(t_args *options);
 

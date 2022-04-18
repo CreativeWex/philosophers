@@ -17,9 +17,10 @@ int main(int argc, char **argv)
     if(ft_structure_init(&s_options, argc, argv) == 0)
         return (0);
     
-    // инит мьютекса
     ft_init_philos(&s_options);
-    printf("\nCтруктура инициализирована");
+    printf("\n\tCтруктура философов инициализирована");
+    ft_init_mutex(&s_options);
+    printf("\n\tМьютексы инициализированы");
     // pthread_create(&id, 0, ft_philo, arr_philos[0].philo_id);
     
     return (0);

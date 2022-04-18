@@ -39,3 +39,17 @@ void ft_init_philos(t_args *options)
 
     }
 }
+
+void    ft_init_mutex(t_args *options)
+{
+    pthread_mutex_t *mutex;
+    int             i;
+
+    mutex = malloc(options->philo_number * sizeof(pthread_mutex_t));
+    i = -1;
+    while(++i < options->philo_number)
+        pthread_mutex_init(&mutex[i], NULL);
+    pthread_mutex_init(&options->lock_print, NULL);
+    options->forks = mutex;
+
+}
