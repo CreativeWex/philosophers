@@ -1,7 +1,12 @@
+#ifndef PHILO_H
+# define PHILO_H
 # include <stdio.h>
 # include <pthread.h>
 # include "../libft/libft.h"
 # include <sys/time.h>
+
+# define RED	"\x1b[31m"
+# define RESET "\x1B[0m"
 
 struct s_args;
 
@@ -9,16 +14,12 @@ struct s_args;
 typedef struct s_philos
 {
     int             id;
-    int             philo_number;
 
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
     int             nbr_eated;
-    int             t_die;
-    int             t_eat;
-    int             t_sleep;
-    int             f_must_die; // stop
     time_t          t_last_eated;
+
     struct s_args   *args;
     
     // struct t_time   eating_time;          
@@ -28,17 +29,16 @@ typedef struct s_philos
 // параметры
 typedef struct s_args
 {
-    int             philo_number;
-    int             t_die;
-    int             t_eat;
-    int             t_sleep;
-    int             nbr_of_eating;
-    pthread_mutex_t	lock_print;
-    pthread_t       *thread_ids;
-    pthread_mutex_t	*forks; // 
-    int             f_is_dead;
-
-    t_philos        *philo_arr;
+    int                 philo_number;
+    time_t              t_die;
+    time_t              t_eat;
+    time_t              t_sleep;
+    int                 nbr_of_eating;
+    pthread_mutex_t	    lock_print;
+    pthread_mutex_t	    *forks; 
+    int                 f_is_dead;
+    time_t              t_start;
+    t_philos            *philo_arr;
 
 }                   t_args;
 
@@ -57,7 +57,14 @@ void    *ft_should_philo_die(void *options);
 
 // utils.c
 long	ft_current_time(void);
+long	ft_time_passed(time_t start);
+
+// cleaning.c
+void    ft_close_threads(t_args *options);
+
 
 //testing is 300 bucks
 void    debug_display_struct(t_args *options);
+void    debug_display_philos(t_args *options);
 
+#endif

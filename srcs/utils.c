@@ -20,3 +20,8 @@ void	ft_mysleep(int ms)
 	while (ft_current_time() < time + ms)
 		usleep(ms * 3);
 }
+
+long	ft_time_passed(time_t start)
+{
+	return(start - ft_current_time());
+}

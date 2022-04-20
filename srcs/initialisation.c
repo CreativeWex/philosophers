@@ -3,9 +3,9 @@
 int ft_structure_init(t_args *options, int argc, char **argv)
 {
     options->philo_number = ft_atoi(argv[1]);
-    options->t_die = ft_atoi(argv[2]) * 1000;
-    options->t_eat = ft_atoi(argv[3]) * 1000;
-    options->t_sleep = ft_atoi(argv[3]) * 1000;
+    options->t_die = ft_atoi(argv[2]);
+    options->t_eat = ft_atoi(argv[3]);
+    options->t_sleep = ft_atoi(argv[3]);
     if (options->philo_number < 1 || options->t_die <= 0
     || options->t_eat <= 0 ||options->philo_number <= 0
     || options->t_sleep <= 0)
@@ -13,11 +13,13 @@ int ft_structure_init(t_args *options, int argc, char **argv)
         printf("Error: wrong parameter(s)");
         return (0);
     }
-
+    options->f_is_dead = 0;
+    options->t_start = ft_current_time();
+    // лок принт инит
+    if (argc == 5)
+        options->nbr_of_eating = -1;
     if (argc == 6)
-        printf("5 args");
-    if (argc == 7)
-        printf("Допиливай код");
+        options->nbr_of_eating = ft_atoi(argv[5]);
     return (1);
 }
 
@@ -31,29 +33,31 @@ void ft_init_philos(t_args *options)
     while (++i < options->philo_number)
     {
         philos[i].id = i;
+        philos[i].right_fork = &options->forks[i];
         philos[i].nbr_eated = 0;
-        philos[i].t_eat = options->t_eat;
-        philos[i].t_sleep = options->t_sleep;
-        philos[i].t_die = options->t_die;
-        philos[i].t_last_eated = ft_current_time();
         philos[i].args = options;
-        philos[i].philo_number = options->philo_number;
+        if (i != options->philo_number - 1)
+			philos[i].left_fork = &options->forks[i + 1];
+		else
+			philos[i].left_fork = &options->forks[0];
+        philos[i].left_fork = &options->forks[i + 1];
     }
     options->philo_arr = philos;
+    free(philos);
 }
 
-void    ft_init_mutex(t_args *options)
-{
-    pthread_mutex_t *mutex;
-    int             i;
+// void    ft_init_mutex(t_args *options)
+// {
+//     pthread_mutex_t *mutex;
+//     int             i;
 
-    mutex = malloc(options->philo_number * sizeof(pthread_mutex_t));
-    i = -1;
-    while(++i < options->philo_number)
-        pthread_mutex_init(&mutex[i], NULL);
-    pthread_mutex_init(&options->lock_print, NULL);
-    options->forks = mutex;
-}
+//     mutex = malloc(options->philo_number * sizeof(pthread_mutex_t));
+//     i = -1;
+//     while(++i < options->philo_number)
+//         pthread_mutex_init(&mutex[i], NULL);
+//     pthread_mutex_init(&options->lock_print, NULL);
+//     options->forks = mutex;
+// }
 
 void    ft_init_threads(t_args *options)
 {
@@ -64,10 +68,16 @@ void    ft_init_threads(t_args *options)
     threads = malloc(options->philo_number * sizeof(pthread_t));
     i = -1;
     while(++i < options->philo_number)
+        pthread_create(&threads[i], NULL, ft_philo_lifecycle, (void *)&options->philo_arr[i]); // для каждого философа открываем поток
+    usleep(100);
+    pthread_create(&data, NULL, ft_should_philo_die, (void *)&options->philo_arr); // Поток для отслеживания философов
+    i = -1;
+    while(++i < options->philo_number)
     {
-        pthread_create(&threads[i], NULL, ft_philo_lifecycle, (void *)&options->philo_arr);
+        pthread_mutex_destroy(&options->forks[i]);
+        pthread_join(threads[i], NULL); // ?
     }
-    pthread_create(&data, NULL, ft_should_philo_die, (void *)&options->philo_arr);
-    pthread_join(data, NULL);
-    options->thread_ids = threads;
+    pthread_mutex_destroy(&options->lock_print);
+    free(threads);
+    free(options->forks);
 }

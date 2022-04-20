@@ -13,13 +13,14 @@ int main(int argc, char **argv)
         return (0);
     if(ft_structure_init(&s_options, argc, argv) == 0)
         return (0);
-    debug_display_struct(&s_options); //
     ft_init_philos(&s_options);
-    printf("\n\tCтруктура философов инициализирована"); //
-    ft_init_mutex(&s_options);
-    printf("\n\tМьютексы инициализированы"); //
     ft_init_threads(&s_options);
-    printf("\n\tПотоки открыты"); //
+
+    // ft_init_mutex(&s_options);
+    // printf("\n\tМьютексы инициализированы"); //
+    // debug_display_philos(&s_options);
+    // ft_init_threads(&s_options);
+    // printf("\n\tПотоки открыты"); //
 
     return (0);
 }

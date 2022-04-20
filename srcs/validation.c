@@ -31,12 +31,12 @@ int    ft_is_num(char **argv)
 
 int ft_validation(int argc, char **argv)
 {
-    if (argc < 6 || argc > 7)
+    if (argc < 5 || argc > 6)
     {
         ft_wrong_arg_num();
         return (0);
     }
-    else if (!ft_is_num(argv))
+    if (!ft_is_num(argv))
         return (0);
     return (1);
 }
