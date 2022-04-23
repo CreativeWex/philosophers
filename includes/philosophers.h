@@ -54,14 +54,12 @@ int     ft_validation(int argc, char **argv);
 // initialisation.c
 int     ft_structure_init(t_args *options, int argc, char **argv);
 void    ft_init_philos(t_args *options);
-void    ft_init_mutex(t_args *options);
 void    ft_init_threads(t_args *options);
 
 // utils.c
 long	ft_current_time(void);
 int     ft_time_passed(long t_start);
 void 	ft_mysleep(int ms);
-int	    ft_need_to_stop(t_philos philo, t_args options, int i);
 
 // actions.c
 void    ft_philo_eating(t_philos *philo);

@@ -1,46 +1,22 @@
-OK header
-    OK struct philos
-    OK struct args
-
 validation
+    прогнать на тестах
 
 initialisation
     struct
-        OK philo_number
-        OK t_die
-        OK t_eat
-        OK t_sleep
-        OK f_is_dead
-        OK total_eat
-        OK t_start
-        OK nbr_of_eating
-        OK lock_print
-        OK forks
-        philo_arr
         очистка
     philos
-        OK id
-        OK left_fork
-        OK right_fork
-        OK nbr_of_eated
-        OK t_last_eated
-        OK args
         очистка
     mutex
+        уничтожить
     threads
 ft_philo_lifecycle
 operations
-print
-    print 2 -
-        left fork
-        right fork
-        eating
-        sleeping
-        thinking
-    print 1
-    
+    проверка на выход функции при неудачном принте
+
 stop_func
 очистка
     options->forks
     philo_arr
+
+Почему статик
 

@@ -52,10 +52,10 @@ void    ft_init_threads(t_args *options)
     while(++i < options->philo_number)
     {
         pthread_mutex_init(&options->forks[i], NULL);
-        // требуется доработка lifecycle // pthread_create(&threads[i], NULL, ft_philo_lifecycle, (void *)&options->philo_arr[i]); // для каждого философа открываем поток
+        pthread_create(&threads[i], NULL, ft_philo_lifecycle, (void *)&options->philo_arr[i]); // для каждого философа открываем поток
     }
     usleep(100);
-    // требуется доработка philo_die // pthread_create(&data, NULL, ft_should_philo_die, (void *)&options->philo_arr); // Поток для отслеживания философов
+    pthread_create(&data, NULL, &ft_should_philo_die, (void *)&options->philo_arr); // Поток для отслеживания философов
     i = -1;
     while(++i < options->philo_number)
     {

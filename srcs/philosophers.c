@@ -5,45 +5,80 @@ void    *ft_philo_lifecycle(void* philosopher)
 {
     t_philos    *philo;
 
-    philo = (t_philos *)philosopher;
+    philo = philosopher;
     if (philo->id % 2 == 0)
         ft_mysleep((int)philo->args->t_eat);
-    while(philo->args->f_is_dead && philo->nbr_eated != philo->args->nbr_of_eating)
+    while(philo->args->f_is_dead != 1 && philo->nbr_eated != philo->args->nbr_of_eating)
     {
+        // pthread_mutex_lock(&philo->args->lock_print);
+        // pthread_mutex_unlock(&philo->args->lock_print);
+
+        // левая вилка
         pthread_mutex_lock(philo->left_fork);
+        pthread_mutex_lock(&philo->args->lock_print);
         printf(MAG "%ld: %d has taken a left fork\n", (philo->args->t_start), philo->id);
+        pthread_mutex_unlock(&philo->args->lock_print);
+
+        // правая вилка
         pthread_mutex_lock(philo->right_fork);
+        pthread_mutex_lock(&philo->args->lock_print);
         printf(MAG "%ld: %d has taken a right fork\n", (philo->args->t_start), philo->id);
+        pthread_mutex_unlock(&philo->args->lock_print);
         ft_philo_eating(philo);
         pthread_mutex_unlock(philo->left_fork);
         pthread_mutex_unlock(philo->right_fork);
         ft_philo_sleeping(philo);
-        ft_philo_sleeping(philo);
+        ft_philos_thinking(philo);
     }
     return (NULL);
 }
 
-// void    *ft_should_philo_die(void *data)
-// {
-//     int         i;
-//     t_philos    *philo;
-//     t_args      *options;
+int stop(t_philos *philo, t_args *data, int i)
+{
+    if (data->t_die + 1 <= ft_time_passed(data->t_start) - philo[i].t_last_eated)
+	{
+		data->f_is_dead = 1;
+        pthread_mutex_lock(&philo->args->lock_print);
+		printf(RED"%d: %d died\n", ft_time_passed(philo->args->t_start), philo->id);
+        pthread_mutex_unlock(&philo->args->lock_print);
+		return (1);
+	}
+	if (philo[i].nbr_eated == data->nbr_of_eating)
+	{
+		data->total_eat++;
+		if (data->total_eat == data->philo_number)
+		{
+            pthread_mutex_lock(&philo->args->lock_print);
+			printf(GRN"%d: all the philosophers ate\n",
+				ft_time_passed(data->t_start));
+            pthread_mutex_unlock(&philo->args->lock_print);
+			return (1);
+		}
+	}
+	return (0);
+}
 
-//     (t_philos*) data;
-//     options = philo->args;
-//     while (1)
-// 	{
-// 		options->nbr_of_eating = 0;
-// 		i = 0;
-// 		while (i < options->philo_number)
-// 		{
-// 			if (ft_need_to_stop(philo[i], options, i))
-// 				return (NULL);
-// 			i++;
-// 			ft_mysleep(1);
-// 		}
-// 	}
-// }
+void    *ft_should_philo_die(void *tmp)
+{
+    int         i;
+    t_philos    *philo;
+    t_args      *data;
+
+    philo = tmp;
+    data = philo[0].args;
+    while(1)
+    {
+        data->total_eat = 0;
+        i = 0;
+        while (i < data->philo_number)
+        {
+            if (stop(philo, data, i))
+                return (NULL);
+            i++;
+            ft_mysleep(1);
+        }
+    }
+}
 
 int main(int argc, char **argv)
 {
@@ -57,12 +92,6 @@ int main(int argc, char **argv)
         return (0);
     ft_init_philos(&s_options);
     ft_init_threads(&s_options);
-
-    // ft_init_mutex(&s_options);
-    // printf("\n\tМьютексы инициализированы"); //
-    // debug_display_philos(&s_options);
-    // ft_init_threads(&s_options);
-    // printf("\n\tПотоки открыты"); //
 
     return (0);
 }
