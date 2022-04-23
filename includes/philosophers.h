@@ -59,7 +59,7 @@ void    ft_init_threads(t_args *options);
 
 // utils.c
 long	ft_current_time(void);
-int     ft_time_passed(time_t start);
+int     ft_time_passed(long t_start);
 void 	ft_mysleep(int ms);
 int	    ft_need_to_stop(t_philos philo, t_args options, int i);
 

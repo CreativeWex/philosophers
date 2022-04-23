@@ -21,9 +21,9 @@ void	ft_mysleep(int ms)
 		usleep(ms * 3);
 }
 
-int	ft_time_passed(time_t start)
+int	ft_time_passed(long t_start)
 {
-	return(start - ft_current_time());
+	return ((int)(ft_current_time() - t_start));
 }
 
 // int	ft_need_to_stop(t_philos philo, t_args options, int i)
