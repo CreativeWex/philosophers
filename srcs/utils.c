@@ -26,19 +26,19 @@ int	ft_time_passed(time_t start)
 	return(start - ft_current_time());
 }
 
-int	ft_need_to_stop(t_philos philo, t_args options, int i)
-{ 
-	if (ft_time_passed(philo.t_last_eated) >= philo.args->t_die + 1)
-	{
-		options.f_is_dead = 1;
-		pthread_mutex_lock(&philo.args->lock_print);
-		printf(RED"%d: %d died\n", get_time_passed(philo.args->t_start), philo.id);
-		pthread_mutex_unlock(&philo.args->lock_print);
-		return (1);
-	}
-	if (philo.nbr_eated == philo.args->nbr_of_eating)
-	{
-		options.f_is_dead = 1;
+// int	ft_need_to_stop(t_philos philo, t_args options, int i)
+// { 
+// 	if (ft_time_passed(philo.t_last_eated) >= philo.args->t_die + 1)
+// 	{
+// 		options.f_is_dead = 1;
+// 		pthread_mutex_lock(&philo.args->lock_print);
+// 		printf(RED"%d: %d died\n", get_time_passed(philo.args->t_start), philo.id);
+// 		pthread_mutex_unlock(&philo.args->lock_print);
+// 		return (1);
+// 	}
+// 	if (philo.nbr_eated == philo.args->nbr_of_eating)
+// 	{
+// 		options.f_is_dead = 1;
 		
-	}
-}
+// 	}
+// }

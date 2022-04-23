@@ -19,7 +19,7 @@ int    ft_is_num(char **argv)
     i = 1;
     while (argv[i])
 	{
-		if (!ft_atoi(argv[i]))
+		if (!ft_atoi(argv[i]) || ft_atoi(argv[i]) < 1)
 		{
 			printf("Invalid argument: %s\n", argv[i]);
 			return (0);

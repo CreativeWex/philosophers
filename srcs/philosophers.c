@@ -23,34 +23,33 @@ void    *ft_philo_lifecycle(void* philosopher)
     return (NULL);
 }
 
-void    *ft_should_philo_die(void *data)
-{
-    int         i;
-    t_philos    *philo;
-    t_args      *options;
+// void    *ft_should_philo_die(void *data)
+// {
+//     int         i;
+//     t_philos    *philo;
+//     t_args      *options;
 
-    (t_philos*) data;
-    options = philo->args;
-    while (1)
-	{
-		options->nbr_of_eating = 0;
-		i = 0;
-		while (i < options->philo_number)
-		{
-			if (ft_stop_simulation(philo, data, i))
-				return (NULL);
-			i++;
-			ft_mysleep(1);
-		}
-	}
-}
+//     (t_philos*) data;
+//     options = philo->args;
+//     while (1)
+// 	{
+// 		options->nbr_of_eating = 0;
+// 		i = 0;
+// 		while (i < options->philo_number)
+// 		{
+// 			if (ft_need_to_stop(philo[i], options, i))
+// 				return (NULL);
+// 			i++;
+// 			ft_mysleep(1);
+// 		}
+// 	}
+// }
 
 int main(int argc, char **argv)
 {
-    t_args  s_options;
-    pthread_t id;
-    void*    data;
-    int i;
+    t_args      s_options;
+    pthread_t   id;
+    int         i;
 
     if(ft_validation(argc, argv) == 0)
         return (0);
