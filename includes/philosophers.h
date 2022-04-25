@@ -45,7 +45,7 @@ typedef struct s_args
 }                       t_args;
 
 // philosophers.c
-void    *ft_philo_lifecycle(void* philosopher);
+void    *ft_philo_lifecycle(void *philosopher);
 void    *ft_should_philo_die(void *data);
 
 // validation.c
@@ -53,8 +53,9 @@ int     ft_validation(int argc, char **argv);
 
 // initialisation.c
 int     ft_structure_init(t_args *options, int argc, char **argv);
-void    ft_init_philos(t_args *options);
-void    ft_init_threads(t_args *options);
+void    ft_init_threads(t_args *options, t_philos    *philo);
+void ft_init_philos(t_args *options, t_philos *philos, pthread_t *threads);
+
 
 // utils.c
 long	ft_current_time(void);

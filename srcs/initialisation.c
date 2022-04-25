@@ -18,15 +18,14 @@ int ft_structure_init(t_args *options, int argc, char **argv)
     return (1);
 }
 
-void ft_init_philos(t_args *options)
+void ft_init_philos(t_args *options, t_philos *philos, pthread_t *threads)
 {
     int         i;
-    t_philos    *philos;
 
-    philos = malloc(options->philo_number * sizeof(t_philos));
     i = -1;
     while (++i < options->philo_number)
     {
+        pthread_mutex_init(&options->forks[i], NULL);
         philos[i].id = i + 1;
         philos[i].right_fork = &options->forks[i];
         philos[i].t_last_eated = 0;
@@ -36,26 +35,20 @@ void ft_init_philos(t_args *options)
 			philos[i].left_fork = &options->forks[i + 1];
 		else
 			philos[i].left_fork = &options->forks[0];
+        pthread_create(&threads[i], NULL, &ft_philo_lifecycle, (void *)(&philos[i]));
     }
     options->philo_arr = philos;
+    usleep(100);
 }
 
-void    ft_init_threads(t_args *options)
+void    ft_init_threads(t_args *options, t_philos    *philo)
 {
     pthread_t   *threads;
-    t_philos    *philo;
+
     pthread_t   data;
     int         i;
 
-    threads = malloc((options->philo_number + 1) * sizeof(pthread_t));
-    i = -1;
-    while(++i < options->philo_number)
-    {
-        pthread_mutex_init(&options->forks[i], NULL);
-        pthread_create(&threads[i], NULL, ft_philo_lifecycle, (void *)&options->philo_arr[i]); // для каждого философа открываем поток
-    }
-    usleep(100);
-    pthread_create(&data, NULL, &ft_should_philo_die, (void *)&options->philo_arr); // Поток для отслеживания философов
+    pthread_create(&threads[i], NULL, &ft_should_philo_die, (void *)(philo)); // Поток для отслеживания философов
     i = -1;
     while(++i < options->philo_number)
     {

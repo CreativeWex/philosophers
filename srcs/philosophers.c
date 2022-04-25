@@ -1,7 +1,7 @@
 
 #include "../includes/philosophers.h"
 
-void    *ft_philo_lifecycle(void* philosopher)
+void    *ft_philo_lifecycle(void *philosopher)
 {
     t_philos    *philo;
 
@@ -83,15 +83,18 @@ void    *ft_should_philo_die(void *tmp)
 int main(int argc, char **argv)
 {
     t_args      s_options;
-    pthread_t   id;
+    t_philos    *philos;
+    pthread_t   *threads;
     int         i;
 
     if(ft_validation(argc, argv) == 0)
         return (0);
     if(ft_structure_init(&s_options, argc, argv) == 0)
         return (0);
-    ft_init_philos(&s_options);
-    ft_init_threads(&s_options);
+    philos = malloc(s_options.philo_number * sizeof(t_philos));
+    threads = malloc((s_options.philo_number + 1) * sizeof(pthread_t));
+    ft_init_philos(&s_options, philos, threads);
+    ft_init_threads(&s_options, philos);
 
     return (0);
 }

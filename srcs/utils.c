@@ -2,13 +2,10 @@
 
 long	ft_current_time(void)
 {
-    long			result;
-	struct timeval	tv;
+	struct timeval	t_start;
 
-
-	gettimeofday(&tv, NULL);
-	result = 1000 * (size_t)tv.tv_sec + (size_t)tv.tv_usec / 1000;
-	return (result);
+	gettimeofday(&t_start, NULL);
+	return (t_start.tv_sec * 1000 + t_start.tv_usec / 1000);
 }
 
 void	ft_mysleep(int ms)
