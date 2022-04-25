@@ -37,7 +37,7 @@ typedef struct s_args
     int                 nbr_of_eating;
     pthread_mutex_t	    lock_print;
     pthread_mutex_t	    *forks; 
-    int				    total_eat; //eat all
+    int				    total_eat;
     int                 f_is_dead;
     long                t_start;
     struct s_philos     *philo_arr;
@@ -53,8 +53,7 @@ int     ft_validation(int argc, char **argv);
 
 // initialisation.c
 int     ft_structure_init(t_args *options, int argc, char **argv);
-void    ft_init_threads(t_args *options, t_philos    *philo);
-void ft_init_philos(t_args *options, t_philos *philos, pthread_t *threads);
+void    ft_init_philos(t_args *options, t_philos *philos, pthread_t *threads);
 
 
 // utils.c

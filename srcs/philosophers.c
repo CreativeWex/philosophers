@@ -87,6 +87,7 @@ int main(int argc, char **argv)
     pthread_t   *threads;
     int         i;
 
+    i = 0;
     if(ft_validation(argc, argv) == 0)
         return (0);
     if(ft_structure_init(&s_options, argc, argv) == 0)
@@ -94,7 +95,15 @@ int main(int argc, char **argv)
     philos = malloc(s_options.philo_number * sizeof(t_philos));
     threads = malloc((s_options.philo_number + 1) * sizeof(pthread_t));
     ft_init_philos(&s_options, philos, threads);
-    ft_init_threads(&s_options, philos);
-
+    pthread_create(&threads[i], NULL, &ft_should_philo_die, (void *)(philos));
+    i = -1;
+    while(++i < s_options.philo_number)
+        pthread_mutex_destroy(&s_options.forks[i]);
+    pthread_join(threads[i], NULL);
+    pthread_mutex_destroy(&s_options.lock_print);
+    free(threads);
+    free(s_options.forks);
+    free(philos);
+    while(1){}
     return (0);
 }

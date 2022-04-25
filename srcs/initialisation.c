@@ -40,22 +40,3 @@ void ft_init_philos(t_args *options, t_philos *philos, pthread_t *threads)
     options->philo_arr = philos;
     usleep(100);
 }
-
-void    ft_init_threads(t_args *options, t_philos    *philo)
-{
-    pthread_t   *threads;
-
-    pthread_t   data;
-    int         i;
-
-    pthread_create(&threads[i], NULL, &ft_should_philo_die, (void *)(philo)); // Поток для отслеживания философов
-    i = -1;
-    while(++i < options->philo_number)
-    {
-        pthread_mutex_destroy(&options->forks[i]);
-        pthread_join(threads[i], NULL);
-    }
-    // pthread_mutex_destroy(&options->lock_print);
-    // free(threads);
-    // free(options->forks);
-}

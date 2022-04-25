@@ -10,13 +10,12 @@ HEADER  =	includes/philosophers.h
 
 SRCS	=	srcs/philosophers.c srcs/validation.c srcs/initialisation.c \
 			srcs/utils.c	srcs/actions.c\
-			#srcs/testing.c\
 			
 
 OBJS	=	$(SRCS:%.c=%.o)
 
 CC		=	gcc
-CFLAGS	=	#-Wall -Wextra -Werror
+CFLAGS	=	-Wall -Wextra -Werror #-fsanitize=thread
 RM		= rm -rf
 
 #//////////////////////////////////////////////////////////////////////////////
