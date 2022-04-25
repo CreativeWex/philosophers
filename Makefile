@@ -1,6 +1,6 @@
 .PHONY	:	all clean fclean re libft
 
-NAME	=	philosophers
+NAME	=	philo
 LIBFT	= 	libft/libft.a
 HEADER  =	includes/philosophers.h
 

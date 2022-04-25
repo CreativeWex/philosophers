@@ -1,3 +1,4 @@
 test/a.out
 srcs/*.o
 philosophers
+tester/
