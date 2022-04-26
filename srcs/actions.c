@@ -17,7 +17,7 @@ void    ft_philo_sleeping(t_philos *philo)
     if (philo->args->f_is_dead == 1)
         return ;
     pthread_mutex_lock(&philo->args->lock_print);
-    printf(BLU "%d: %d is sleeping\n", ft_time_passed(philo->args->t_sleep), philo->id);
+    printf(BLU "%d: %d is sleeping\n", ft_time_passed(philo->args->t_start), philo->id);
     pthread_mutex_unlock(&philo->args->lock_print);
     ft_mysleep((int)philo->args->t_sleep);
 }

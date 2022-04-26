@@ -16,13 +16,13 @@ void    *ft_philo_lifecycle(void *philosopher)
         // левая вилка
         pthread_mutex_lock(philo->left_fork);
         pthread_mutex_lock(&philo->args->lock_print);
-        printf(MAG "%ld: %d has taken a left fork\n", (philo->args->t_start), philo->id);
+        printf(MAG "%d: %d took a left fork\n", ft_time_passed(philo->args->t_start), philo->id);
         pthread_mutex_unlock(&philo->args->lock_print);
 
         // правая вилка
         pthread_mutex_lock(philo->right_fork);
         pthread_mutex_lock(&philo->args->lock_print);
-        printf(MAG "%ld: %d has taken a right fork\n", (philo->args->t_start), philo->id);
+        printf(MAG "%d: %d took a right fork\n", ft_time_passed(philo->args->t_start), philo->id);
         pthread_mutex_unlock(&philo->args->lock_print);
         ft_philo_eating(philo);
         pthread_mutex_unlock(philo->left_fork);
