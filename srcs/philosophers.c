@@ -42,20 +42,14 @@ int stop(t_philos *philo, t_args *data, int i)
 		data->f_is_dead = 1;
         pthread_mutex_lock(&philo->args->lock_print);
 		printf(RED"%d: %d died\n", ft_time_passed(philo->args->t_start), philo->id);
-        pthread_mutex_unlock(&philo->args->lock_print);
+        // pthread_mutex_unlock(&philo->args->lock_print);
 		return (1);
 	}
 	if (philo[i].nbr_eated == data->nbr_of_eating)
 	{
 		data->total_eat++;
 		if (data->total_eat == data->philo_number)
-		{
-            // pthread_mutex_lock(&philo->args->lock_print);
-			// printf(GRN"%d: all the philosophers ate\n",
-			// 	ft_time_passed(data->t_start));
-            // pthread_mutex_unlock(&philo->args->lock_print);
 			return (1);
-		}
 	}
 	return (0);
 }
@@ -76,9 +70,7 @@ void    *ft_should_philo_die(void *tmp)
         while (i < data->philo_number)
         {
             if (stop(philo, data, i))
-            {
                 return (0);
-            }
             i++;
             ft_mysleep(1);
         }

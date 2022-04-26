@@ -34,6 +34,7 @@ void ft_join_clean(t_args *s_options, t_philos *philos, pthread_t *threads)
 	i = -1;
 	while(++i < s_options->philo_number)
 	{
+		// pthread_mutex_unlock(&philos->args->lock_print); // если закомментить, то смерть выводит адекватно
 		pthread_mutex_unlock(&s_options->forks[i]);
 		pthread_mutex_destroy(&s_options->forks[i]);
 	}
