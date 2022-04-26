@@ -18,6 +18,9 @@ int ft_structure_init(t_args *options, int argc, char **argv)
     return (1);
 }
 
+// Правая вилка по порядковому номеру
+// Последний филосов берет левую вилку у первого,
+// остальные философы берут свою правую
 void ft_init_philos(t_args *options, t_philos *philos, pthread_t *threads)
 {
     int         i;
@@ -35,8 +38,7 @@ void ft_init_philos(t_args *options, t_philos *philos, pthread_t *threads)
 			philos[i].left_fork = &options->forks[i + 1];
 		else
 			philos[i].left_fork = &options->forks[0];
-        pthread_create(&threads[i], NULL, &ft_philo_lifecycle, (void *)(&philos[i]));
+        pthread_create(&threads[i], NULL, ft_philo_lifecycle, (void *)(&philos[i]));
     }
     options->philo_arr = philos;
-    usleep(100);
 }

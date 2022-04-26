@@ -60,6 +60,7 @@ void    ft_init_philos(t_args *options, t_philos *philos, pthread_t *threads);
 long	ft_current_time(void);
 int     ft_time_passed(long t_start);
 void 	ft_mysleep(int ms);
+void    ft_join_clean(t_args *s_options, t_philos *philos, pthread_t *threads);
 
 // actions.c
 void    ft_philo_eating(t_philos *philo);

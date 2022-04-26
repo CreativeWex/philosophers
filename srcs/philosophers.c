@@ -24,6 +24,8 @@ void    *ft_philo_lifecycle(void *philosopher)
         pthread_mutex_lock(&philo->args->lock_print);
         printf(MAG "%d: %d took a right fork\n", ft_time_passed(philo->args->t_start), philo->id);
         pthread_mutex_unlock(&philo->args->lock_print);
+
+
         ft_philo_eating(philo);
         pthread_mutex_unlock(philo->left_fork);
         pthread_mutex_unlock(philo->right_fork);
@@ -64,6 +66,7 @@ void    *ft_should_philo_die(void *tmp)
     t_philos    *philo;
     t_args      *data;
 
+    int num = 0;
     philo = tmp;
     data = philo[0].args;
     while(1)
@@ -73,7 +76,9 @@ void    *ft_should_philo_die(void *tmp)
         while (i < data->philo_number)
         {
             if (stop(philo, data, i))
-                return (NULL);
+            {
+                return (0);
+            }
             i++;
             ft_mysleep(1);
         }
@@ -95,15 +100,9 @@ int main(int argc, char **argv)
     philos = malloc(s_options.philo_number * sizeof(t_philos));
     threads = malloc((s_options.philo_number + 1) * sizeof(pthread_t));
     ft_init_philos(&s_options, philos, threads);
+    //
+
     pthread_create(&threads[i], NULL, &ft_should_philo_die, (void *)(philos));
-    i = -1;
-    while(++i < s_options.philo_number)
-        pthread_mutex_destroy(&s_options.forks[i]);
-    pthread_join(threads[i], NULL);
-    pthread_mutex_destroy(&s_options.lock_print);
-    free(threads);
-    free(s_options.forks);
-    free(philos);
-    while(1){}
+    ft_join_clean(&s_options, philos, threads);
     return (0);
 }

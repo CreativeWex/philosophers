@@ -22,3 +22,22 @@ int	ft_time_passed(long t_start)
 {
 	return ((int)(ft_current_time() - t_start));
 }
+
+void ft_join_clean(t_args *s_options, t_philos *philos, pthread_t *threads)
+{
+	int	i;
+
+	i = -1;
+
+	while(++i < s_options->philo_number)
+	    pthread_join(threads[i], NULL);
+	i = -1;
+	while(++i < s_options->philo_number)
+	{
+		pthread_mutex_unlock(&s_options->forks[i]);
+		pthread_mutex_destroy(&s_options->forks[i]);
+	}
+	free(threads);
+	free(s_options->forks);
+	free(philos);
+}
