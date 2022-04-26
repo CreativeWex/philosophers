@@ -50,10 +50,10 @@ int stop(t_philos *philo, t_args *data, int i)
 		data->total_eat++;
 		if (data->total_eat == data->philo_number)
 		{
-            pthread_mutex_lock(&philo->args->lock_print);
-			printf(GRN"%d: all the philosophers ate\n",
-				ft_time_passed(data->t_start));
-            pthread_mutex_unlock(&philo->args->lock_print);
+            // pthread_mutex_lock(&philo->args->lock_print);
+			// printf(GRN"%d: all the philosophers ate\n",
+			// 	ft_time_passed(data->t_start));
+            // pthread_mutex_unlock(&philo->args->lock_print);
 			return (1);
 		}
 	}
@@ -104,5 +104,7 @@ int main(int argc, char **argv)
 
     pthread_create(&threads[i], NULL, &ft_should_philo_die, (void *)(philos));
     ft_join_clean(&s_options, philos, threads);
+    if (s_options.total_eat == s_options.philo_number)
+        printf(GRN"[ All the philosophers ate ]\n");
     return (0);
 }
