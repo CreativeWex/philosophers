@@ -14,10 +14,10 @@
 # define PHILO_H
 
 # include <stdio.h>
-# include <pthread.h>
 # include <unistd.h>
 # include <stdlib.h>
 # include <sys/time.h>
+# include <semaphore.h>
 
 # define RED	"\x1b[31m"
 # define BLU	"\x1B[34m"
@@ -34,11 +34,14 @@ struct				s_args;
 typedef struct s_philos
 {
 	int				id;
-	pthread_mutex_t	*left_fork;
-	pthread_mutex_t	*right_fork;
+	int				*left_fork;
+	int				*right_fork;
 	int				nbr_eated;
 	long			t_last_eated;
 	struct s_args	*args;
+	pid_t			proc_id;
+	//death check
+	//x ate
 }					t_philos;
 
 // параметры
@@ -49,17 +52,18 @@ typedef struct s_args
 	long				t_eat;
 	long				t_sleep;
 	int					nbr_of_eating;
-	pthread_mutex_t		lock_print;
-	pthread_mutex_t		*forks;
+	sem_t				lock_print;
+	sem_t				*forks;
+	sem_t				*eating_check;
 	int					total_eat;
 	int					f_is_dead;
 	long				t_start;
 	struct s_philos		*philo_arr;
-
+	// t_philos			philo[200];
 }						t_args;
 
 // philosophers.c
-void	*ft_philo_lifecycle(void *philosopher);
+ void	ft_philo_lifecycle(t_philos philosopher, t_args *options)
 void	*ft_should_philo_die(void *data);
 
 // validation.c
@@ -67,13 +71,13 @@ int		ft_validation(int argc, char **argv);
 
 // initialisation.c
 int		ft_structure_init(t_args *options, int argc, char **argv);
-void	ft_init_philos(t_args *options, t_philos *philos, pthread_t *threads);
+ void	ft_philo_lifecycle(t_philos *philosopher, t_args *options)
+int		ft_init_semaphore(t_args *options);
 
 // utils.c
 long	ft_current_time(void);
 int		ft_time_passed(long t_start);
 void	ft_mysleep(int ms);
-void	ft_join_clean(t_args *s_options, t_philos *philos, pthread_t *threads);
 int		ft_atoi(char *str);
 
 // actions.c

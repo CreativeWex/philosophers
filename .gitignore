@@ -1,2 +1,7 @@
 philo/srcs/*.o
 philo/philo
+.DS_Store
+philo_bonus/srcs/*.o
+philo_bonus/philo
+philo/.DS_Store
+philo_bonus/.DS_Store
