@@ -1,4 +1,16 @@
-#include "../includes/philosophers.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jnidorin <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/04 16:11:20 by jnidorin          #+#    #+#             */
+/*   Updated: 2022/05/04 16:11:25 by jnidorin         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../includes/philo.h"
 
 long	ft_current_time(void)
 {
@@ -21,4 +33,51 @@ void	ft_mysleep(int ms)
 int	ft_time_passed(long t_start)
 {
 	return ((int)(ft_current_time() - t_start));
+}
+
+void	ft_join_clean(t_args *s_options, t_philos *philos, pthread_t *threads)
+{
+	int	i;
+
+	i = -1;
+	while (++i < s_options->philo_number)
+		pthread_join(threads[i], NULL);
+	i = -1;
+	while (++i < s_options->philo_number)
+	{
+		pthread_mutex_unlock(&s_options->forks[i]);
+		pthread_mutex_destroy(&s_options->forks[i]);
+	}
+	free(threads);
+	free(s_options->forks);
+	free(philos);
+}
+
+int	ft_atoi(char *str)
+{
+	unsigned int	i;
+	int				sign;
+	unsigned long	res;
+
+	i = 0;
+	sign = 1;
+	res = 0;
+	while (((str[i] > 8) && (str[i] < 14)) || (str[i] == 32))
+		i++;
+	if ((str[i] == '-') || (str[i] == '+'))
+	{
+		if (str[i] == '-')
+			sign = -1;
+		i++;
+	}
+	while ((str[i] && str[i] >= '0' && str[i] <= '9'))
+	{
+		res = res * 10 + str[i] - '0';
+		i++;
+	}
+	if ((sign == -1) && (res > 9223372036854775808u))
+		return (0);
+	if ((sign == 1) && (res >= 9223372036854775808u))
+		return (-1);
+	return (sign * res);
 }

@@ -1,8 +1,7 @@
-.PHONY	:	all clean fclean re libft
+.PHONY	:	all clean fclean re
 
 NAME	=	philo
-LIBFT	= 	libft/libft.a
-HEADER  =	includes/philosophers.h
+HEADER  =	includes/philo.h
 
 #//////////////////////////////////////////////////////////////////////////////
 #		ALL FILES
@@ -15,7 +14,7 @@ SRCS	=	srcs/philosophers.c srcs/validation.c srcs/initialisation.c \
 OBJS	=	$(SRCS:%.c=%.o)
 
 CC		=	gcc
-CFLAGS	=	-Wall -Wextra -Werror #-fsanitize=thread
+CFLAGS	=	#-Wall -Wextra -Werror #-fsanitize=thread
 RM		= rm -rf
 
 #//////////////////////////////////////////////////////////////////////////////
@@ -32,9 +31,9 @@ END		=	\033[0m
 
 all		:	$(NAME)
 
-$(NAME)	:	$(OBJS) $(HEADER) ${SRCS} ${HEAD} ${LIBFT}
+$(NAME)	:	$(OBJS) $(HEADER) ${SRCS} ${HEAD}
 	@echo "\n$(BLUE)Compilation of $(NAME)$(END)"
-	@$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
 	@echo "$(TURQUOISE)\n[ Completed $(NAME) ]\n$(END)"
 
 %.o		:	%.c $(HEADER)
