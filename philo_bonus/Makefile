@@ -8,7 +8,7 @@ HEADER  =	includes/philo.h
 #//////////////////////////////////////////////////////////////////////////////
 
 SRCS	=	srcs/philo.c srcs/validation.c srcs/initialisation.c \
-			srcs/utils.c	srcs/actions.c\
+			srcs/utils.c
 			
 
 OBJS	=	$(SRCS:%.c=%.o)

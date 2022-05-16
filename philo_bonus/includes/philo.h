@@ -42,12 +42,11 @@ typedef struct s_philos
 	int				id;
 	int				*left_fork;
 	int				*right_fork;
-	int				nbr_eated;
-	long			t_last_eated;
+	int				nbr_eated; //x_ate
+	long			t_last_eated; //last meal
 	struct s_args	*args;
 	pid_t			proc_id;
-	pthread_t		dead;
-	//x ate
+	pthread_t		dead; //death_check
 }					t_philos;
 
 // параметры
@@ -57,15 +56,14 @@ typedef struct s_args
 	long				t_die;
 	long				t_eat;
 	long				t_sleep;
-	int					nbr_of_eating;
+	int					nbr_of_eating; //eat_count
 	sem_t				*lock_print;
 	sem_t				*forks;
 	sem_t				*eating_check;
 	int					total_eat;
-	int					f_is_dead;
+	int					f_is_dead; //dead
 	long				t_start;
 	struct s_philos		*philo_arr;
-	// t_philos			philo[200];
 }						t_args;
 
 // philosophers.c
@@ -78,7 +76,8 @@ int		ft_validation(int argc, char **argv);
 // initialisation.c
 int		ft_structure_init(t_args *options, int argc, char **argv);
 int		ft_init_semaphore(t_args *options);
-int		ft_init_philos(t_args *options, t_philos *philos);
+void	ft_init_philos(t_args *options, t_philos *philos);
+int		ft_init_pids(t_args *options);
 
 
 // utils.c

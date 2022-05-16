@@ -1,33 +1,7 @@
-&Структура
-# Валидация
-&Инициализация вопрос по отправке параметров в lifecycle
-    typedef struct s_philos
-
-	#int				id;
-	int				*left_fork;
-	int				*right_fork;
-	#int				nbr_eated;
-	#long			t_last_eated;
-	#struct s_args	*args;
-	pid_t			proc_id;
-	//death check
-	//x ate
-
-
-    typedef struct s_args
-
-	#int					philo_number;
-	#long				t_die;
-	#long				t_eat;
-	#long				t_sleep;
-	#int					nbr_of_eating;
-	#sem_t				lock_print;
-	#sem_t				*forks;
-	#sem_t				*eating_check;
-	#int					total_eat;
-	#int					f_is_dead;
-	#long				t_start;
-	#struct s_philos		*philo_arr;
-	// t_philos			philo[200];
-
-Старт
+Валидация+
+Инициализация+
+	структура+
+	семафоры+
+	философы+
+Лончер
+	
