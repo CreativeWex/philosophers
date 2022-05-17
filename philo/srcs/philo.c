@@ -34,8 +34,7 @@ void	*ft_philo_lifecycle(void *philosopher)
 		pthread_mutex_unlock(&philo->args->lock_print);
 		ft_philo_eating(philo);
 		pthread_mutex_unlock(philo->left_fork);
-		pthread_mutex_unlock(philo->rig
-		ht_fork);
+		pthread_mutex_unlock(philo->right_fork);
 		ft_philo_sleeping(philo);
 		ft_philos_thinking(philo);
 	}
