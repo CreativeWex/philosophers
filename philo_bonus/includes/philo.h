@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jnidorin <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: abernita <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/04 15:49:45 by jnidorin          #+#    #+#             */
-/*   Updated: 2022/05/04 15:49:49 by jnidorin         ###   ########.fr       */
+/*   Created: 2022/04/07 18:48:41 by abernita          #+#    #+#             */
+/*   Updated: 2022/04/07 18:48:45 by abernita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,68 +26,65 @@
 # include <sys/stat.h>
 
 # define RED	"\x1b[31m"
-# define BLU	"\x1B[34m"
-# define GRN	"\x1B[32m"
-# define YEL	"\x1B[33m"
-# define MAG	"\x1B[35m"
-# define CYN	"\x1B[36m"
-# define WHT	"\x1B[37m"
-# define RESET  "\x1B[0m"
+# define BLU   "\x1B[34m"
+# define GRN   "\x1B[32m"
+# define YEL   "\x1B[33m"
+# define MAG   "\x1B[35m"
+# define CYN   "\x1B[36m"
+# define WHT   "\x1B[37m"
+# define RESET "\x1B[0m"
 
-struct				s_args;
-
-// философы
 typedef struct s_philos
 {
-	int				id;
-	int				*left_fork;
-	int				*right_fork;
-	int				nbr_eated; //x_ate
-	long			t_last_eated; //last meal
+	int				id;	// id
+	int				nbr_eated;	// nbr_eated
+	int				left_fork;
+	int				right_fork;
+	long long		t_last_eated;	// t_last_eated
 	struct s_args	*args;
+	pthread_t		death_check;
 	pid_t			proc_id;
-	pthread_t		dead; //death_check
 }					t_philos;
 
-// параметры
 typedef struct s_args
 {
-	int					philo_number;
-	long				t_die;
-	long				t_eat;
-	long				t_sleep;
-	int					nbr_of_eating; //eat_count
-	sem_t				*lock_print;
-	sem_t				*forks;
-	sem_t				*eating_check;
-	int					total_eat;
-	int					f_is_dead; //dead
-	long				t_start;
-	struct s_philos		*philo_arr;
-}						t_args;
-
-// philosophers.c
-void	ft_philo_lifecycle(t_philos *philosopher, t_args *options);
-void	*ft_should_philo_die(void *data);
+	int				philo_number;	// philo_number
+	long			t_eat;       // t_eat
+	long			t_die;		// t_die
+	long			t_sleep;		// t_sleep
+	int				nbr_of_eating;		// nbr_of_eating
+	int				f_is_dead;			// f_is_dead
+	long long		t_start;		// t_start
+	sem_t			*eating_check;    // eating_check
+	sem_t			*forks;
+	sem_t			*lock_print;		// lock_print
+	t_philos		philo[200];
+	int				total_eat;
+}					t_args;
 
 // validation.c
 int		ft_validation(int argc, char **argv);
 
-// initialisation.c
-int		ft_structure_init(t_args *options, int argc, char **argv);
-int		ft_init_semaphore(t_args *options);
-void	ft_init_philos(t_args *options, t_philos *philos);
-int		ft_init_pids(t_args *options);
+//init.c
+int			ft_init_structure(t_args *options, char **argv);
+int			ft_init_semaphore(t_args *options);
+void		ft_init_philo(t_args *options);
+int			ft_init_pids(t_args *options);
 
+// philo.c
+void		ft_philo_lifecycle(void *void_philo);
+void		ft_cleaning_up(t_args *options);
 
-// utils.c
-long	ft_current_time(void);
-int		ft_time_passed(long t_start);
-void	ft_mysleep(int ms);
-int		ft_atoi(char *str);
+//utils.c
+int			ft_atoi(const char *str);
+long long	timestamp(void);
+void		smart_sleep(long long time, t_args *options);
 
-// actions.c
-void	ft_philo_eating(t_philos *philo);
+// a-utils.c
+long long	ft_current_time(void);
+long long	ft_time_passed(long t_start);
+void		ft_mysleep(int ms);
+
 
 
 #endif
