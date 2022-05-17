@@ -34,7 +34,8 @@ void	*ft_philo_lifecycle(void *philosopher)
 		pthread_mutex_unlock(&philo->args->lock_print);
 		ft_philo_eating(philo);
 		pthread_mutex_unlock(philo->left_fork);
-		pthread_mutex_unlock(philo->right_fork);
+		pthread_mutex_unlock(philo->rig
+		ht_fork);
 		ft_philo_sleeping(philo);
 		ft_philos_thinking(philo);
 	}
@@ -101,6 +102,6 @@ int	main(int argc, char **argv)
 	pthread_create(&threads[i], NULL, &ft_should_philo_die, (void *)(philos));
 	ft_join_clean(&s_options, philos, threads);
 	if (s_options.total_eat == s_options.philo_number)
-		printf(GRN"[ All the philosophers ate ]\n");
+		printf(GRN"[ All philosophers ate ]\n");
 	return (0);
 }
