@@ -1,4 +1,14 @@
-
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   initialisation.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jnidorin <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/17 19:30:59 by jnidorin          #+#    #+#             */
+/*   Updated: 2022/05/17 19:31:03 by jnidorin         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../includes/philo.h"
 
@@ -10,7 +20,8 @@ int	ft_init_semaphore(t_args *options)
 	options->forks = sem_open("forks", O_CREAT, S_IRWXU, options->philo_number);
 	options->lock_print = sem_open("lock_print", O_CREAT, S_IRWXU, 1);
 	options->eating_check = sem_open("mealcheck", O_CREAT, S_IRWXU, 1);
-	if (options->forks <= 0 || options->lock_print <= 0 || options->eating_check <= 0)
+	if (options->forks <= 0 || options->lock_print <= 0
+		|| options->eating_check <= 0)
 		return (1);
 	return (0);
 }

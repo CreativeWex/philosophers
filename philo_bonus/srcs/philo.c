@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philo.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jnidorin <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/17 19:31:14 by jnidorin          #+#    #+#             */
+/*   Updated: 2022/05/17 19:31:22 by jnidorin         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/philo.h"
 
 void	ft_philos_eating(t_philos *philo)
@@ -8,12 +20,12 @@ void	ft_philos_eating(t_philos *philo)
 	sem_wait(args->forks);
 	sem_wait(args->lock_print);
 	printf(MAG "%lli: %d took a left fork\n",
-			ft_time_passed(philo->args->t_start), philo->id);
+		ft_time_passed(philo->args->t_start), philo->id);
 	sem_post(args->lock_print);
 	sem_wait(args->forks);
 	sem_wait(args->lock_print);
 	printf(MAG "%lli: %d took a right fork\n",
-			ft_time_passed(philo->args->t_start), philo->id);
+		ft_time_passed(philo->args->t_start), philo->id);
 	sem_post(args->lock_print);
 	sem_wait(args->eating_check);
 	sem_wait(args->lock_print);
@@ -31,28 +43,27 @@ void	ft_philos_eating(t_philos *philo)
 void	*ft_death_checker(void *void_philo)
 {
 	t_philos	*philo;
-	t_args	*options;
 
 	philo = (t_philos *)void_philo;
-	options = philo->args;
 	while (42)
 	{
-		sem_wait(options->eating_check);
-		if (ft_time_passed(philo->t_last_eated) > options->t_die)
+		sem_wait(philo->args->eating_check);
+		if (ft_time_passed(philo->t_last_eated) > philo->args->t_die)
 		{
-			sem_wait(options->lock_print);
+			sem_wait(philo->args->lock_print);
 			printf(RED"%lli: %d died\n",
 				ft_time_passed(philo->args->t_start), philo->id);
-			sem_post(options->lock_print);
-			options->f_is_dead = 1;
-			sem_wait(options->lock_print);
+			sem_post(philo->args->lock_print);
+			philo->args->f_is_dead = 1;
+			sem_wait(philo->args->lock_print);
 			exit(1);
 		}
-		sem_post(options->eating_check);
-		if (options->f_is_dead)
+		sem_post(philo->args->eating_check);
+		if (philo->args->f_is_dead)
 			break ;
 		usleep(1000);
-		if (philo->nbr_eated >= options->nbr_of_eating && options->nbr_of_eating != -1)
+		if (philo->nbr_eated >= philo->args->nbr_of_eating
+			&& philo->args->nbr_of_eating != -1)
 			break ;
 	}
 	return (NULL);
@@ -61,31 +72,26 @@ void	*ft_death_checker(void *void_philo)
 void	ft_philo_lifecycle(void *void_philo)
 {
 	t_philos	*philo;
-	t_args	*options;
 
 	philo = (t_philos *)void_philo;
-	options = philo->args;
 	philo->t_last_eated = ft_current_time();
 	pthread_create(&(philo->death_check), NULL, ft_death_checker, void_philo);
 	if (philo->id % 2)
 		usleep(42);
-	while (!(options->f_is_dead))
+	while (!(philo->args->f_is_dead))
 	{
 		ft_philos_eating(philo);
-		if (philo->nbr_eated >= options->nbr_of_eating && options->nbr_of_eating != -1)
+		if (philo->nbr_eated >= philo->args->nbr_of_eating
+			&& philo->args->nbr_of_eating != -1)
 			break ;
-		sem_wait(options->lock_print);
-		printf(BLU "%lli: %d is sleeping\n",
-			ft_time_passed(philo->args->t_start), philo->id);
-		sem_post(options->lock_print);
-		ft_mysleep(options->t_sleep);
-		sem_wait(options->lock_print);
+		ft_philo_sleeping(philo);
+		sem_wait(philo->args->lock_print);
 		printf(RESET "%lli: %d is thinking\n",
 			ft_time_passed(philo->args->t_start), philo->id);
-		sem_post(options->lock_print);
+		sem_post(philo->args->lock_print);
 	}
 	pthread_join(philo->death_check, NULL);
-	if (options->f_is_dead)
+	if (philo->args->f_is_dead)
 		exit(1);
 	exit(0);
 }
@@ -121,7 +127,7 @@ int	main(int argc, char **argv)
 	t_args	s_options;
 
 	if (ft_validation(argc, argv) == 0)
-			return (0);
+		return (0);
 	ft_init_structure(&s_options, argv);
 	if (ft_init_semaphore(&s_options))
 	{

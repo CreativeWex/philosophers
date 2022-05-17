@@ -1,5 +1,25 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jnidorin <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/17 19:30:24 by jnidorin          #+#    #+#             */
+/*   Updated: 2022/05/17 19:30:29 by jnidorin         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../includes/philo.h"
+
+void	ft_philo_sleeping(t_philos *philo)
+{
+	sem_wait(philo->args->lock_print);
+	printf(BLU "%lli: %d is sleeping\n",
+		ft_time_passed(philo->args->t_start), philo->id);
+	sem_post(philo->args->lock_print);
+	ft_mysleep(philo->args->t_sleep);
+}
 
 int	ft_atoi(const char *str)
 {
